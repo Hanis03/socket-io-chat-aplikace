@@ -27,7 +27,7 @@ const newUser = (user) => {
         </li>
     `;
     users.innerHTML += newUserDiv;
-    chat.innerHTML += user + " joined!";
+    chat.innerHTML += user + " joined! <br>";
 }
 
 onUserConnect();
@@ -38,6 +38,7 @@ socket.on("new user connected", (data) => {
 
 socket.on("user disconnected", (user) => {
     document.querySelector(`.${user}-userlist`).remove();
+    chat.innerHTML += user + " disconnect! <br>";
 });
 
 socket.on("chat", (data) => {
