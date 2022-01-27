@@ -8,20 +8,26 @@ const socket = io("https://socket-io-lesson.herokuapp.com");
 let userName = "";
 
 const onUserConnect = (user) => {
-    userName = user || `User${Math.floor(Math.random() * 1000000)}`;
+    userName = user || `${prompt('Jake je tve jmeno?', '')}`;
     socket.emit("new user connected", userName);
     newUser(userName);
+    console.log(userName)
+}
+
+if(userName = null){
+    window.location.reload();
 }
 
 const newUser = (user) => {
     if (document.querySelector(`.${user}-userlist`)) return;
     const newUserDiv = `<li><span class="tag is-white is-medium">
         <div class="${user}-userlist">
-            <p>${user}</p>
+            <p>${user} </p>
         </div></span>
         </li>
     `;
     users.innerHTML += newUserDiv;
+    chat.innerHTML += user + " joined!";
 }
 
 onUserConnect();
@@ -39,6 +45,6 @@ socket.on("chat", (data) => {
 });
 
 send.onclick = () => {
-    socket.emit("chat", `${userName}: ${input.value}`);
-    input.value = "";
+socket.emit("chat", `${userName}: ${input.value}`);
+input.value = "";
 }
